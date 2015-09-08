@@ -1,21 +1,12 @@
 module Utilities
+	SECONDS_IN_A_YEAR = 31536000.0
 	
-	def evaluate(x)
-		if x % 100 == 0
-			if x % 400 == 0
-				true
-			else
-				false
-			end
-		elsif x % 4 == 0
-			true
-		else
-			false
-		end
+	def evaluate_leap_year(year)
+	(is_divisible(year,100) && is_divisible(year,400)) || (is_divisible(year,4) && !is_divisible(year,100))  
 	end
 
-	def amount(a)
-		('%.1f' % ((a / 31536000.0) * 100)) + '%'
+	def percent_of_the_year(a)
+		convert_to_float(year_percent(a)) + '%'
 	end
 
 	def convert(x)
@@ -75,6 +66,16 @@ module Utilities
 		end
 
 		return ('%.1f' % (amount(c)[0..-2].to_f - amount(d)[0..-2].to_f)).to_s + '%'
+	end
+	private
+	def is_divisible(a,b)
+		a % b == 0
+	end
+	def convert_to_float(x)
+		'%.1f' % x
+	end
+	def year_percent(n)
+		(n / SECONDS_IN_A_YEAR) * 100
 	end
 
 end
